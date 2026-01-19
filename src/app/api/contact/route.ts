@@ -54,8 +54,41 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // TODO: Send email notification to contact@gurujitechglobal.com
-    // You can use z-ai-web-dev-sdk or any email service here
+    // Send email notification
+    try {
+      // In a production environment, you would use:
+      // - Resend, SendGrid, AWS SES, or another email service
+      // - For now, we'll log the email content (you can replace this with actual email sending)
+      console.log('=== NEW CONTACT FORM SUBMISSION ===');
+      console.log(`From: ${name} <${email}>`);
+      console.log(`Service: ${service}`);
+      console.log(`Message: ${message}`);
+      console.log(`GDPR Consent: ${gdprConsent}`);
+      console.log('=== END SUBMISSION ===\n');
+
+      // TODO: Uncomment and configure your email service
+      // Example with Resend:
+      /*
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: 'no-reply@gurujitechglobal.com',
+        to: 'contact@gurujitechglobal.com',
+        subject: `New Contact Form Submission - ${service}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Service:</strong> ${service}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+          <p><strong>GDPR Consent:</strong> ${gdprConsent ? 'Yes' : 'No'}</p>
+        `
+      });
+      */
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      // Don't fail the request if email fails, just log it
+    }
 
     return NextResponse.json({
       success: true,

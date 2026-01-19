@@ -1,0 +1,17 @@
+{
+  "name": "Guruji Tech Global",
+  "short_name": "Guruji Tech",
+  "description": "Professional IT support and managed IT services with 24/7 UK-based support",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

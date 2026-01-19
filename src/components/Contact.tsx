@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 const serviceOptions = [
   'Cloud Services',
@@ -17,6 +17,7 @@ const serviceOptions = [
 ];
 
 export function Contact() {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,23 +40,43 @@ export function Contact() {
 
   const validateForm = () => {
     if (!formData.name || formData.name.length < 2) {
-      toast.error('Name must be at least 2 characters');
+      toast({
+        title: "Validation Error",
+        description: "Name must be at least 2 characters",
+        variant: "destructive"
+      });
       return false;
     }
     if (!formData.email || !formData.email.includes('@')) {
-      toast.error('Please enter a valid email address');
+      toast({
+        title: "Validation Error",
+        description: "Please enter a valid email address",
+        variant: "destructive"
+      });
       return false;
     }
     if (!formData.service) {
-      toast.error('Please select a service');
+      toast({
+        title: "Validation Error",
+        description: "Please select a service",
+        variant: "destructive"
+      });
       return false;
     }
     if (!formData.message || formData.message.length < 10) {
-      toast.error('Message must be at least 10 characters');
+      toast({
+        title: "Validation Error",
+        description: "Message must be at least 10 characters",
+        variant: "destructive"
+      });
       return false;
     }
     if (!formData.gdprConsent) {
-      toast.error('Please accept the GDPR consent');
+      toast({
+        title: "Validation Error",
+        description: "Please accept the GDPR consent",
+        variant: "destructive"
+      });
       return false;
     }
     return true;
@@ -84,7 +105,10 @@ export function Contact() {
       const data = await response.json();
 
       if (data.success) {
-        toast.success('Thank you! Your message has been sent successfully.');
+        toast({
+          title: "Success",
+          description: "Thank you! Your message has been sent successfully."
+        });
         setFormData({
           name: '',
           email: '',
@@ -96,7 +120,11 @@ export function Contact() {
         throw new Error(data.error || 'Failed to submit form');
       }
     } catch (error) {
-      toast.error('An error occurred. Please try again later.');
+      toast({
+        title: "Error",
+        description: "An error occurred. Please try again later.",
+        variant: "destructive"
+      });
       console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
